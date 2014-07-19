@@ -3,6 +3,9 @@ assets/*
 protected/data/*.db
 themes/classic/views/
 
+/common/www/assets/*
+!/common/www/assets/.htaccess
+
 # Yii runtime dir
 /runtime/*
 !/runtime/.gitkeep

@@ -1,20 +1,21 @@
 <?php
 
-/*$config['modules']['gii'] = [
+$config['modules']['gii'] = [
 	'class'=>'system.gii.GiiModule',
 	'password' => false,
 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
 	'ipFilters'=>['127.0.0.1','::1'],
     'generatorPaths' => ['bootstrap.gii'],
-);*/
+];
 
 $group = &$config['components']['db'];
 $group = array_merge($group, [
 	'connectionString' => 'mysql:host=localhost;dbname=erm',
-	'username' => 'username',
-	'password' => 'password',
+	'username' => 'root',
+	'password' => 'root',
 ]);
 
+// yiidebugtb
 
 $config['components']['log']['routes'][] = [
     'class'=>'XWebDebugRouter',
