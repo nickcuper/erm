@@ -12,6 +12,7 @@ class ESearchModule extends CWebModule
 			'ESearch.models.*',
 			'ESearch.components.*',
 		));
+
 	}
 
 	public function beforeControllerAction($controller, $action)

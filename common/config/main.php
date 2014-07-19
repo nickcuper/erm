@@ -26,6 +26,11 @@ $config = [
         'bootstrap.helpers.*',
         'bootstrap.widgets.*',
     ],
+    'modules' => [
+            'ESearch',
+            'Memcached',
+            'RMQ',
+    ],
     // application components
     'components' => [
 
@@ -38,7 +43,7 @@ $config = [
         'user'         => [
             'class'          => 'WebUser',
             'allowAutoLogin' => true, // enable cookie-based authentication
-            'loginUrl'       => ['account/login'],
+            'loginUrl'       => ['login'],
         ],
         'urlManager'   => [
             'showScriptName' => false,
@@ -47,10 +52,12 @@ $config = [
                 ''                                       => 'site/index',
                 'login'                                  => 'site/login',
                 'logout'                                 => 'site/logout',
-                '<controller:\w+>/'                      => '<controller>/index',
                 '<controller:\w+>/<id:\d+>'              => '<controller>/view',
                 '<controller:\w+>/<id:\d+>/<action:\w+>' => '<controller>/<action>',
-                '<controller:\w+>/<action:\w+>'          => '<controller>/<action>',
+                // module Rules
+                'esearch/<action:\w+>' => 'ESearch/default/<action>',
+                'memcached/<action:\w+>' => 'Memcached/default/<action>',
+                'rmq/<action:\w+>' => 'RMQ/default/<action>',
             ],
         ],
         'db'           => [
