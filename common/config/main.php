@@ -70,7 +70,14 @@ $config = [
             'enableParamLogging'    => YII_DEBUG,
         ],
         'cache'        => [
-            'class'     => 'CFileCache',
+            'class'     => 'CMemCache',
+            'servers'=> [
+                [
+                    'host'=>'127.0.0.1',
+                    'port'=>11211,
+                    'weight'=>60
+                ],
+            ],
 
         ],
         'assetManager' => [

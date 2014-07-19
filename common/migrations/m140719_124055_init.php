@@ -28,10 +28,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE IF NOT EXISTS `comment` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `businessId` int(10) unsigned NOT NULL,
   `userId` int(10) unsigned NOT NULL,
   `created` datetime NOT NULL,
-  `rating` tinyint(3) unsigned NOT NULL,
   `text` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
