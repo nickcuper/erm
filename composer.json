@@ -1,0 +1,19 @@
+{
+	"require": {
+        "php": ">=5.4.0",
+		"yiisoft/yii": "dev-master",
+		"2amigos/escriptboost": "dev-master",
+		"cr0t/yiidebugtb": "dev-master",
+		"drmabuse/yii-bootstrap-3-module": "dev-master"
+	},
+	"require-dev": {
+            "fzaninotto/faker": "1.*",
+            "guzzlehttp/guzzle": "~4.0",
+            "phpunit/phpunit": "4.1.*",
+            "phpunit/php-invoker": "*",
+            "phpunit/dbunit": ">=1.2",
+            "phpunit/phpunit-selenium": ">=1.2",
+            "phpunit/phpunit-story": "1.0.*"
+	}
+
+}
