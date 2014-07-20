@@ -2,7 +2,6 @@
 
 class DefaultController extends WebController
 {
-        private $modelClass = 'Comment';
 
 	public function actionIndex()
 	{
@@ -26,8 +25,8 @@ class DefaultController extends WebController
         {
                 $id = Yii::app()->request->getParam('id');
 
-                $model = ActiveRecord::model($this->modelClass)
-                    ->cache(60*60*24, new CacheTags($this->modelClass))
+                $model = ActiveRecord::model('Comment')
+                    ->cache(60*60*24, new CacheTags('Comment'))
                     ->findByPk($id);
 
                 if ($model === null)
@@ -52,23 +51,23 @@ class DefaultController extends WebController
 
         public function actionCreateTest()
 	{
-            for ($i=1;$i<100;$i++) {
-                $mComment = new Comment;
-                $mComment->userId = rand(14,18);
-                $mComment->text = $this->generateRandomString(rand(50,180));
-                $mComment->created = date('Y-m-d H:i:s');
-                $mComment->save();
-            }
-		#$this->render('index', ['model' => $mComment]);
+                for ($i=1;$i<100;$i++)
+                {
+                        $mComment = new Comment;
+                        $mComment->userId = rand(14,18);
+                        $mComment->text = $this->generateRandomString(rand(50,180));
+                        $mComment->created = date('Y-m-d H:i:s');
+                        $mComment->save();
+                }
 	}
 
         private function generateRandomString($length = 10)
         {
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $randomString = '';
-            for ($i = 0; $i < $length; $i++) {
-                $randomString .= $characters[rand(0, strlen($characters) - 1)];
-            }
-            return $randomString;
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $randomString = '';
+                for ($i = 0; $i < $length; $i++) {
+                        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+                }
+                return $randomString;
         }
 }
