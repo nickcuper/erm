@@ -12,7 +12,7 @@ $config = [
     'name'          => 'ERM',
     'theme'         => 'adminlte',
     // preloading 'log' component
-    'preload'       => ['log'],
+    'preload'       => ['log', 'importelastica'],
     'aliases'       => [
         'bootstrap' => 'root.vendor.drmabuse.yii-bootstrap-3-module',
     ],
@@ -32,7 +32,16 @@ $config = [
     ],
     // application components
     'components'    => [
-
+        'importelastica' => [
+            'class'   => 'application.modules.ESearch.extensions.ElasticaLoader',
+            'libPath' => 'application.modules.ESearch.lib', //assume you installed Elastica to /lib/
+        ],
+        'elastica'       => [
+            'class' => 'application.modules.ESearch.components.Elastica',
+            'host'  => 'localhost',
+            'port'  => '9200',
+            'debug' => false
+        ],
         'bootstrap'    => [
             'class' => 'bootstrap.components.BsApi',
         ],
@@ -102,8 +111,8 @@ $config = [
                     'css'     => [YII_DEBUG ? 'font-awesome.css' : 'font-awesome.min.css'],
                 ],
                 'adminlte'     => [
-                    'depends'  => ['bootstrap'],
                     'basePath' => 'root.themes.adminlte.assets',
+                    'depends'  => ['bootstrap'],
                     'css'      => ['base.css'],
                     'js'       => ['base.js'],
                 ],

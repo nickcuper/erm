@@ -11,6 +11,7 @@ class ESearchModule extends CWebModule
 		$this->setImport(array(
 			'ESearch.models.*',
 			'ESearch.components.*',
+			'ESearch.extensions.*',
 		));
 
 	}
