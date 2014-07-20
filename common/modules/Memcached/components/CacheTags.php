@@ -15,7 +15,7 @@ class CacheTags implements ICacheDependency
     function __construct()
     {
             $this->tags = func_get_args();
-
+            
             if (count($this->tags) === 1 && is_array($this->tags[0]))
                 $this->tags = $this->tags[0];
     }

@@ -44,7 +44,7 @@ class User extends CActiveRecord
                     ['email', 'length', 'max' => 254],
                     ['email', 'email'],
                     ['email', 'unique'],
-                    ['password', 'safe', 'on' => 'register, profile, admin'],
+                    ['password', 'safe', 'on' => 'register'],
 
                     ['passwordHash', 'unsafe'],
 
@@ -96,7 +96,19 @@ class User extends CActiveRecord
     {
             return parent::model($className);
     }
+    
+    public function beforeSave()
+    {
+            if (!parent::beforeSave())
+                return false;
 
+            // Not using behavior because we're using this string after saving
+            // and we need date in string, not CDbExpression('NOW()')
+            if ($this->isNewRecord && $this->hasAttribute('created'))
+                $this->created = date('Y-m-d H:i:s');
+
+            return true;
+    }
     /**
      * @return boolean
      */

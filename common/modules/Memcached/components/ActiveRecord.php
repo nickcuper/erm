@@ -14,15 +14,6 @@ abstract class ActiveRecord extends CActiveRecord
     }
 
     /**
-     * @return CDbCommand
-     */
-    public function dbQuery()
-    {
-            return $this->dbConnection->createCommand()
-                ->from($this->tableName() . ' as t');
-    }
-
-    /**
      * @return \CActiveDataProvider
      */
     abstract public function search();
@@ -50,13 +41,14 @@ abstract class ActiveRecord extends CActiveRecord
 
     public function afterDelete()
     {
-            parent::afterSave();
+            parent::afterDelete();
             $this->onChange();
     }
-    
+
     public function onChange()
     {
             $class = get_class($this);
+
             Yii::app()->cache->clear([$class, $class . '-' . $this->id]);
     }
 }

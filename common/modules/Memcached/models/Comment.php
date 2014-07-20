@@ -12,7 +12,7 @@
  * The followings are the available model relations:
  * @property User $user
  */
-class Comment extends CActiveRecord
+class Comment extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -85,6 +85,8 @@ class Comment extends CActiveRecord
 		$criteria->compare('userId',$this->userId,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('text',$this->text,true);
+
+                $this->cache(60*60*24, new CacheTags([$this->tableName()]));
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
