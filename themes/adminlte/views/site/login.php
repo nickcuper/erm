@@ -13,7 +13,11 @@
 <?php echo $form->passwordFieldControlGroup($model, 'password'); ?>
 
 <p class="hint">
-    Hint: You may login with <tt>demo/demo</tt>.
+    <tt>admin@gmail.com/admin</tt>
+    <tt>manager@gmail.com/manager</tt>
+    <tt>demo1@gmail.com/demo</tt>
+    <tt>demo2@gmail.com/demo</tt>
+    <tt>demo3@gmail.com/demo</tt>
 </p>
 
 <?php

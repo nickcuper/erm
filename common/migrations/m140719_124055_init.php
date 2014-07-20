@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `passwordHash` char(64) NOT NULL DEFAULT '',
   `created` datetime NOT NULL,
   `role` enum('user','manager','admin') NOT NULL DEFAULT 'user',
-  `linkCode` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 

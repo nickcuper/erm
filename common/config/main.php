@@ -12,27 +12,26 @@ $config = [
     'name'          => 'ERM',
     'theme'         => 'adminlte',
     // preloading 'log' component
-    'preload' => ['log'],
-    'aliases' => [
+    'preload'       => ['log'],
+    'aliases'       => [
         'bootstrap' => 'root.vendor.drmabuse.yii-bootstrap-3-module',
     ],
     // autoloading model and component classes
-    'import' => [
+    'import'        => [
         // Yii autoloaded files
         'application.models.*',
         'application.components.*',
-        'application.extensions.*',
         'bootstrap.behaviors.*',
         'bootstrap.helpers.*',
         'bootstrap.widgets.*',
     ],
-    'modules' => [
-            'ESearch',
-            'Memcached',
-            'RMQ',
+    'modules'       => [
+        'ESearch',
+        'Memcached',
+        'RMQ',
     ],
     // application components
-    'components' => [
+    'components'    => [
 
         'bootstrap'    => [
             'class' => 'bootstrap.components.BsApi',
@@ -55,9 +54,9 @@ $config = [
                 '<controller:\w+>/<id:\d+>'              => '<controller>/view',
                 '<controller:\w+>/<id:\d+>/<action:\w+>' => '<controller>/<action>',
                 // module Rules
-                'esearch/<action:\w+>' => 'ESearch/default/<action>',
-                'memcached/<action:\w+>' => 'Memcached/default/<action>',
-                'rmq/<action:\w+>' => 'RMQ/default/<action>',
+                'esearch/<action:\w+>'                   => 'ESearch/default/<action>',
+                'memcached/<action:\w+>'                 => 'Memcached/default/<action>',
+                'rmq/<action:\w+>'                       => 'RMQ/default/<action>',
             ],
         ],
         'db'           => [
@@ -71,42 +70,44 @@ $config = [
         ],
         'cache'        => [
             'class'     => 'CMemCache',
-            'servers'=> [
+            'servers'   => [
                 [
-                    'host'=>'127.0.0.1',
-                    'port'=>11211,
-                    'weight'=>60
+                    'host'   => '127.0.0.1',
+                    'port'   => 11211,
+                    'weight' => 60
                 ],
             ],
-
+            'behaviors' => [
+                'CacheWrapBehavior',
+                'TaggingBehavior',
+            ],
         ],
         'assetManager' => [
             'class'                  => 'EAssetManagerBoostGz',
             'minifiedExtensionFlags' => ['min.js', 'minified.js', 'packed.js'],
         ],
         'clientScript' => [
-            'packages'  => [
-                'jquery'                 => [ // jQuery CDN - provided by (mt) Media Temple
+            'packages' => [
+                'jquery'       => [ // jQuery CDN - provided by (mt) Media Temple
                     'baseUrl' => 'http://code.jquery.com/',
                     'js'      => [YII_DEBUG ? 'jquery-2.0.2.js' : 'jquery-2.0.2.min.js'],
                 ],
-                'bootstrap'              => [
+                'bootstrap'    => [
                     'baseUrl' => '//netdna.bootstrapcdn.com/bootstrap/3.1.1/',
                     'css'     => ['css/bootstrap.min.css'], // , 'css/bootstrap-theme.min.css'
                     'js'      => ['js/bootstrap.min.js'],
                 ],
-                'font-awesome'           => [
+                'font-awesome' => [
                     'baseUrl' => '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/',
                     'css'     => [YII_DEBUG ? 'font-awesome.css' : 'font-awesome.min.css'],
                 ],
-                'adminlte'               => [
+                'adminlte'     => [
                     'depends'  => ['bootstrap'],
                     'basePath' => 'root.themes.adminlte.assets',
                     'css'      => ['base.css'],
                     'js'       => ['base.js'],
                 ],
             ],
-
         ],
         'errorHandler' => [
             // use 'site/error' action to display errors
@@ -122,7 +123,7 @@ $config = [
             ],
         ],
     ],
-    'params' => [
+    'params'        => [
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
     ],

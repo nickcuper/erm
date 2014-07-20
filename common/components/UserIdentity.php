@@ -40,8 +40,8 @@ class UserIdentity extends CUserIdentity
 
     public function getOk()
     {
-        return $this->errorCode === self::ERROR_NONE;
-        ;
+            return $this->errorCode === self::ERROR_NONE;
+            ;
     }
 
 }

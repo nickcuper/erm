@@ -16,11 +16,6 @@
  *
  * @property PasswordBehavior $passwordBehavior
  * @property string $password
- * @method boolean passwordIs($password)
- *
- * @property AllIdsBehavior $allIdsBehavior
- * @method array allIds($condition = '', $params = array())
- * @method array allIdsByAttributes($attributes, $condition = '', $params = array())
  */
 class User extends CActiveRecord
 {
@@ -45,16 +40,13 @@ class User extends CActiveRecord
     public function rules()
     {
             return [
-                    ['email, name', 'required'],
+                    ['email', 'required'],
                     ['email', 'length', 'max' => 254],
                     ['email', 'email'],
-                    ['email, name, token', 'unique'],
+                    ['email', 'unique'],
                     ['password', 'safe', 'on' => 'register, profile, admin'],
-                    ['passwordHash', 'ConditionalRules',
-                        'if'   => [$this, 'isUser'],
-                        'then' => [['required']],
-                    ],
-                    ['passwordHash, token, linkCode', 'unsafe'],
+
+                    ['passwordHash', 'unsafe'],
 
                     ['role', 'unsafe', 'except' => 'admin, search'],
                     // The following rule is used by search().
@@ -76,7 +68,6 @@ class User extends CActiveRecord
     {
             return [
                     'passwordBehavior' => 'PasswordBehavior',
-                    'allIdsBehavior'   => 'AllIdsBehavior',
             ];
     }
 
@@ -107,11 +98,21 @@ class User extends CActiveRecord
     }
 
     /**
-     *
      * @return boolean
      */
     public function isUser()
     {
             return $this->role === self::ROLE_USER;
+    }
+
+    /**
+     * @param string $email
+     * @return User
+     */
+    public function findByEmail($email)
+    {
+            return $this->findByAttributes(array(
+                'email' => $email,
+            ));
     }
 }

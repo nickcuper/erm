@@ -14,9 +14,9 @@ class Controller extends CController
 			'accessControl',
 		);
 	}
-    
+
     public function getPageTitle()
     {
-        return str_replace(Yii::app()->name.' - ', '', parent::getPageTitle());
+            return str_replace(Yii::app()->name.' - ', '', parent::getPageTitle());
     }
 }
