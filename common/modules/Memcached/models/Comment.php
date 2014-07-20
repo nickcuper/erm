@@ -30,7 +30,7 @@ class Comment extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('userId, created, text', 'required'),
+			array('text', 'required'),
 			array('userId', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -45,9 +45,9 @@ class Comment extends ActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'userId'),
-		);
+		return [
+			'user' => [self::BELONGS_TO, 'User', 'userId'],
+		];
 	}
 
 	/**
@@ -55,12 +55,13 @@ class Comment extends ActiveRecord
 	 */
 	public function attributeLabels()
 	{
-		return array(
+		return [
 			'id' => 'ID',
 			'userId' => 'User',
+                        'user.name' => 'User',
 			'created' => 'Created',
 			'text' => 'Text',
-		);
+		];
 	}
 
 	/**
@@ -103,4 +104,6 @@ class Comment extends ActiveRecord
 	{
 		return parent::model($className);
 	}
+
+       
 }
