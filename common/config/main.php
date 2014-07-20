@@ -32,6 +32,7 @@ $config = [
     ],
     // application components
     'components'    => [
+        // elastica {{
         'importelastica' => [
             'class'   => 'application.modules.ESearch.extensions.ElasticaLoader',
             'libPath' => 'application.modules.ESearch.lib', //assume you installed Elastica to /lib/
@@ -41,6 +42,11 @@ $config = [
             'host'  => 'localhost',
             'port'  => '9200',
             'debug' => false
+        ],
+        // }}
+        'amqp' => [
+                'class' => 'application.modules.RMQ.components.AMQP.CAMQP',
+                'host'  => '127.0.0.1'
         ],
         'bootstrap'    => [
             'class' => 'bootstrap.components.BsApi',
