@@ -15,6 +15,7 @@ $config = [
     'preload'       => ['log', 'importelastica'],
     'aliases'       => [
         'bootstrap' => 'root.vendor.drmabuse.yii-bootstrap-3-module',
+        'YiiAMQP' => 'application.modules.RMQ.components.YiiAMQP'
     ],
     // autoloading model and component classes
     'import'        => [
@@ -38,15 +39,10 @@ $config = [
             'libPath' => 'application.modules.ESearch.lib', //assume you installed Elastica to /lib/
         ],
         'elastica'       => [
-            'class' => 'application.modules.ESearch.components.Elastica',
+            'class' => 'common.modules.ESearch.components.Elastica',
             'host'  => 'localhost',
             'port'  => '9200',
             'debug' => false
-        ],
-        // }}
-        'amqp' => [
-                'class' => 'application.modules.RMQ.components.AMQP.CAMQP',
-                'host'  => '127.0.0.1'
         ],
         'bootstrap'    => [
             'class' => 'bootstrap.components.BsApi',
