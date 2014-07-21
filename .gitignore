@@ -5,6 +5,7 @@ themes/classic/views/
 
 /common/www/assets/*
 !/common/www/assets/.htaccess
+!/common/www/assets/.gitkeep
 
 # Yii runtime dir
 /runtime/*
