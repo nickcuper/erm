@@ -2,6 +2,7 @@
 
 class DefaultController extends WebController
 {
+
 	public function actionIndex()
 	{
                 $elastica_query = new Elastica\Query();
@@ -20,17 +21,56 @@ class DefaultController extends WebController
                 ),'users');
 
                 $data = $dataprovider->getData();
-                print_r($data);
-		$this->render('index');
+
+
+                $client = new Elasticsearch\Client();
+                $params = array();
+                /*$params['body']  = array('testField' => 'abc');
+                $params['index'] = 'my_index';
+                $params['type']  = 'my_type';
+                $params['id']    = 'my_id';
+                $ret = $client->index($params);*/
+
+                $params['index'] = 'my_index';
+            $params['type']  = 'my_type';
+            $params['body']['query']['match']['testField'] = 'abc';
+
+            $results = $client->search($params);
+
+
+		$this->render('index',['model' => $results]);
 	}
 
 	public function actionCreate()
 	{
-            
-
-
 
 
 		$this->render('index');
 	}
+
+        /**
+         * Autocomplete
+         * @return string $list
+         */
+        public function actionAutocomplete()
+        {
+                $list ='';
+
+                if (isset($_GET['q']))
+                {
+                        $name = $_GET['q'];
+                        /**
+                         * Criteria search heare
+                         */
+
+
+                        /*foreach ( $emplArray as $model)
+                        {
+                            $list .= $model->first_name.' '.$model->last_name.'|'.$model->employee_id. "\n";
+                        }*/
+                }
+
+                echo $list;
+                Yii::app()->end();
+        }
 }

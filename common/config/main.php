@@ -42,7 +42,7 @@ $config = [
             'class' => 'common.modules.ESearch.components.Elastica',
             'host'  => 'localhost',
             'port'  => '9200',
-            'debug' => false
+            'debug' => true,
         ],
         'bootstrap'    => [
             'class' => 'bootstrap.components.BsApi',

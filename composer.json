@@ -14,7 +14,8 @@
             "phpunit/dbunit": ">=1.2",
             "phpunit/phpunit-selenium": ">=1.2",
             "phpunit/phpunit-story": "1.0.*",
-            "videlalvaro/php-amqplib": "v2.1.0"
+            "videlalvaro/php-amqplib": "v2.1.0",
+            "elasticsearch/elasticsearch": "~1.0"
 	},
         "autoload": {
         "classmap": [
