@@ -66,9 +66,6 @@ class RMQForm extends CFormModel
 
         public function search()
         {
-
-                if (!$this->queue) return false;
-
                 try{
 
                     $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
@@ -92,8 +89,6 @@ class RMQForm extends CFormModel
 
         public function delete()
         {
-                if (!$this->queue) return false;
-
                 try{
 
                     $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
@@ -104,6 +99,7 @@ class RMQForm extends CFormModel
                     $connection->close();
 
                     return $isDeleted;
+                    
                 } catch (Exception $exc) {
                         return $exc->getTraceAsString();
                 }

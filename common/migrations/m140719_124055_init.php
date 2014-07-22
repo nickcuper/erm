@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created` datetime NOT NULL,
   `role` enum('user','manager','admin') NOT NULL DEFAULT 'user',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
 -- Structure for table `comment`
@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `created` datetime NOT NULL,
   `text` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `userId` (`userId`),
-  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `userId` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 SQL;
