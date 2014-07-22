@@ -1,45 +1,65 @@
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-Yii::app()->clientScript->registerScript('autocomplete-details','
-
-    $(function(){
-        $("#ajax-add-subordinates").click(function(){
-            $.post("/employees/addsubordinates",{employee_id:$("#parent_id").val()}, function(){
-                $.fn.yiiGridView.update("employee-grid");
-            })
-        });
-    });
-
-', CClientScript::POS_READY);?>
-<br/><br/>
-<?php
-    $this->beginWidget('bootstrap.widgets.BsPanel', array(
+    $this->beginWidget('bootstrap.widgets.BsPanel', [
         'title' => 'Elastic Search'
-    ));
+    ]);
 ?>
-<div class="col-xs-6">
-<?php    $this->widget('CAutoComplete', array(
+<div class="col-xs-7">
+<?php    
+    $this->widget('CAutoComplete', [
             'model' => 'Employees',
             'name' => 'first_name',
-            'url' => array('/esearch/autocomplete'),
+            'url' => ['/esearch/autocomplete'],
             'minChars' => 3,
             'matchCase'=>false,
             'value' => '',
-            'htmlOptions' => array('class' => 'form-control'),
-            #'methodChain'=>".result(function(event,item){\$(\"#parent_id\").val(item[1]);})",
-    ));
+            'htmlOptions' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'First or Last Name'
+            ],
+            'methodChain'=>".result(function(event,item){\$(\"#_id\").val(item[1]);})",
+    ]);
+    
+    echo CHtml::hiddenField('_id');
+?>
+</div>
+<div class="btn-group">
+<?php
+    echo BsHtml::linkButton('Add Index',
+                    
+                    [
+                        'url' => '/esearch/create',
+                        'color' => BsHtml::BUTTON_COLOR_DEFAULT
+                    ]
+            );
+    
+    echo BsHtml::ajaxSubmitButton('Delete Index','/esearch/delete',
+                    [
+                        'data'=>'js:{id:$("#_id").val()}',
+                        'success'=>'js:function(data){
+                                $("#first_name").val("");
+                                $("#_id").val("");
+                        }',
+                    ],
+                    [
+                        'color' => BsHtml::BUTTON_COLOR_DANGER
+                    ]
+            );
+    echo BsHtml::ajaxSubmitButton('Get STATS','/esearch/stats',
+                    [
+                        'success' => 'js:function(data) {
+                            console.log(window.location);
+                                if (data)
+                                {
+                                        $("#result").html(data);
+                                }
+                        }',
+                    ],
+                    [
+                        'color' => BsHtml::BUTTON_COLOR_INFO
+                    ]
+            );
 ?>
 </div>
 <?php
-
-    echo BsHtml::linkButton('Update Index', array(
-        'color' => BsHtml::BUTTON_COLOR_PRIMARY,
-        'id' => 'ajax-add-subordinates'
-    ));
     $this->endWidget();

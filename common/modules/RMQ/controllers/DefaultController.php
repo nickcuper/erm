@@ -11,7 +11,7 @@ class DefaultController extends WebController
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + create, read, delete', // we only allow deletion via POST request
-			'ajaxOnly + create, read, delete', // we only allow deletion via POST request
+			'ajaxOnly + create, read, delete', // we only allow deletion via AJAX request
 		);
 	}
 

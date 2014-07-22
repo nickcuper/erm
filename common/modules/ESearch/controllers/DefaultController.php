@@ -2,75 +2,113 @@
 
 class DefaultController extends WebController
 {
-
+        /**
+	 * @return array action filters
+	 */
+	public function filters()
+	{
+		return array(
+			'accessControl', // perform access control for CRUD operations
+			'postOnly + stats', // we only allow deletion via POST request
+			'ajaxOnly + stats', // we only allow deletion via AJAX request
+		);
+	}
+        
 	public function actionIndex()
 	{
-                $elastica_query = new Elastica\Query();
-                $term_filter = new Elastica\Filter\Term();
-                $term_filter->setTerm('firstname','Stepan');
-
-                $elastica_query->setFilter($term_filter);
-
-                $dataprovider =  new ElasticaDataProvider('habrahabr', $elastica_query, array(
-                    'sort' => array(
-                        'attributes' => array('firstname.desc',),
-                    ),
-                  'pagination' => array(
-                    'pageSize' => 30,
-                  ),
-                ),'users');
-
-                $data = $dataprovider->getData();
-
-
-                $client = new Elasticsearch\Client();
-                $params = array();
-                /*$params['body']  = array('testField' => 'abc');
-                $params['index'] = 'my_index';
-                $params['type']  = 'my_type';
-                $params['id']    = 'my_id';
-                $ret = $client->index($params);*/
-
-                $params['index'] = 'my_index';
-            $params['type']  = 'my_type';
-            $params['body']['query']['match']['testField'] = 'abc';
-
-            $results = $client->search($params);
-
-
-		$this->render('index',['model' => $results]);
+		$this->render('index',['model' => null]);
 	}
 
 	public function actionCreate()
 	{
+                $model=new ESForm('create');
+                
+                $this->performAjaxValidation($model);
+                
+                if (Yii::app()->request->isPostRequest) 
+                {
+                        $model->attributes = Yii::app()->request->getPost('ESForm');
 
-
-		$this->render('index');
+                        if ($model->validate() && $model->create()) 
+                        {
+                                Yii::app()->user->setFlash('success', "Index was created");
+                                Yii::app()->request->redirect(Yii::app()->createUrl('esearch/index'));
+                        }
+                }
+                
+		$this->render('edit',['model' => $model]);
+	}
+        
+	public function actionDelete()
+	{
+                $model=new ESForm('delete');
+                $model->id=Yii::app()->request->getPost('id');
+                $model->delete();
+                
+		Yii::app()->end();
 	}
 
         /**
          * Autocomplete
+         * @link http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search.html
          * @return string $list
          */
         public function actionAutocomplete()
         {
-                $list ='';
-
+                $list='';
+                
                 if (isset($_GET['q']))
                 {
-                        $name = $_GET['q'];
-                        /**
-                         * Criteria search heare
-                         */
-
-
-                        /*foreach ( $emplArray as $model)
+                        $model=new ESForm('search');
+                        $model->name= trim($_GET['q']);
+                        
+                        $results = $model->search();
+                        
+                        foreach ( $results['hits']['hits'] as $model)
                         {
-                            $list .= $model->first_name.' '.$model->last_name.'|'.$model->employee_id. "\n";
-                        }*/
+                                $_data = $model['_source'];
+                                $list .= $_data['FirstName'].' '.$_data['LastName'].'|'.$model['_id']."\n";
+                        }
                 }
 
                 echo $list;
                 Yii::app()->end();
         }
+        
+        /**
+         * Return statistic by ElasticSearch
+         * @link http://elasticsearch.org/guide/en/elasticsearch/client/php-api/current/_namespaces.html
+         */
+        public function actionStats() 
+        {
+                $client = new Elasticsearch\Client();
+                
+                // Index Stats
+                // Corresponds to curl -XGET localhost:9200/_stats
+                $response = $client->indices()->stats();
+                print_r($response);
+                // Node Stats
+                // Corresponds to curl -XGET localhost:9200/_nodes/stats
+                $response = $client->nodes()->stats();
+                print_r($response);
+                // Cluster Stats
+                // Corresponds to curl -XGET localhost:9200/_cluster/stats
+                $response = $client->cluster()->stats();
+                print_r($response);
+                
+                Yii::app()->end();
+        }
+        
+        /**
+	 * Performs the AJAX validation.
+	 * @param Employees $model the model to be validated
+	 */
+	protected function performAjaxValidation($model)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='es-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
 }

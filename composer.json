@@ -4,7 +4,8 @@
 		"yiisoft/yii": "dev-master",
 		"2amigos/escriptboost": "dev-master",
 		"cr0t/yiidebugtb": "dev-master",
-		"drmabuse/yii-bootstrap-3-module": "dev-master"
+		"drmabuse/yii-bootstrap-3-module": "dev-master",
+                "codemix/YiiElasticSearch": "dev-master"
 	},
 	"require-dev": {
             "fzaninotto/faker": "1.*",
@@ -18,6 +19,7 @@
             "elasticsearch/elasticsearch": "~1.0"
 	},
         "autoload": {
+        
         "classmap": [
             "common/components",
             "common/models",

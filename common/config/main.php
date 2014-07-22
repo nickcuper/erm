@@ -44,6 +44,7 @@ $config = [
             'port'  => '9200',
             'debug' => true,
         ],
+        
         'bootstrap'    => [
             'class' => 'bootstrap.components.BsApi',
         ],

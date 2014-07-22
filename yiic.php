@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('America/Los_Angeles');
 ini_set('expose_php', 'Off');
 
 require_once(__DIR__ . '/vendor/autoload.php');
