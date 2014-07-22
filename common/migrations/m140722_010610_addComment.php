@@ -5,17 +5,23 @@ class m140722_010610_addComment extends CDbMigration
 	public function up()
 	{
                 echo 'Create Comment data'.PHP_EOL;
-                
+                $date = date('Y-m-d H:i:s');
+                $sql = 'SELECT MAX(id) as max, MIN(id) as min FROM user';;
+
+                $userData = Yii::app()->db->createCommand($sql)->queryRow();
+
                 for ($i=1;$i<100;$i++)
                 {
-                        $mComment = new Comment;
-                        $mComment->userId = rand(1,4);
-                        $mComment->text = $this->generateRandomString(rand(50,180));
-                        $mComment->created = date('Y-m-d H:i:s');
-                        $mComment->save();
+                        $idUser = rand($userData['min'],$userData['max']);
+                        $text = $this->generateRandomString(rand(50,180));
+
+                        $inserRow = <<<SQL
+                                INSERT INTO `comment` (`userId`, `created`, `text`) VALUES ($idUser, "$date", "$text");
+SQL;
+                        $this->execute($inserRow);
                 }
                 echo 'Compleate'.PHP_EOL;
-                
+
 	}
 
 	public function down()
@@ -34,8 +40,8 @@ class m140722_010610_addComment extends CDbMigration
 	{
 	}
 	*/
-        
-        
+
+
 
         private function generateRandomString($length = 10)
         {
